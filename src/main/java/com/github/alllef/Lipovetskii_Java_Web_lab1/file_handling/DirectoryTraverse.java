@@ -6,24 +6,22 @@ import java.io.File;
 
 public class DirectoryTraverse {
     private File startFile;
-    private ExecutorHandler executorHandler;
+    private ExecutorHandler executorHandler = new ExecutorHandler();
 
-    public DirectoryTraverse(File startFile, ExecutorHandler executorHandler) {
+    public DirectoryTraverse(File startFile) {
         this.startFile = startFile;
-        this.executorHandler = executorHandler;
+        traverse(startFile);
     }
 
     public void traverse(File dir) {
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
 
-            for (String child : children) {
-                if (!new File(child).isDirectory())
-                    traverse(new File(dir, child));
-                else
-                    executorHandler.execute(dir);
+        File[] children = dir.listFiles();
+
+        for (File child : children) {
+            if (child.isDirectory()) {
+                traverse(child);
+                executorHandler.execute(child);
             }
-
         }
     }
 }

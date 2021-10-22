@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TextParser {
+public class JavaFileParser {
     private File file;
 
-    public TextParser(File file) {
+    public JavaFileParser(File file) {
         this.file = file;
+        System.out.println("Changed file " + file.getName() + "in directory " + file.getParent());
     }
 
     private List<String> getFileAsStringLines() {
@@ -34,7 +35,8 @@ public class TextParser {
 
             for (String line : stringFile) {
                 if (!line.contains("class"))
-                    writer.write(line.replace("public", "protected"));
+                    line = line.replace("public", "protected");
+                writer.write(line + "\n");
             }
 
         } catch (IOException e) {
