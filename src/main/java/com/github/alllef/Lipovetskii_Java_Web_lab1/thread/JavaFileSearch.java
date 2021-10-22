@@ -15,7 +15,7 @@ public class JavaFileSearch implements Runnable {
     public void run() {
         for (File file : directory.listFiles()) {
             if (file.getName().endsWith(".java"))
-                new JavaFileParser(file).changeModifierToProtected();
+                new JavaFileParser(file,new File("output_dir")).changeModifierToProtected();
         }
     }
 }
