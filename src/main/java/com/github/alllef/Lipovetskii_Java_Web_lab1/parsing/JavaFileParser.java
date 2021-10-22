@@ -1,4 +1,6 @@
-package com.github.alllef.Lipovetskii_Java_Web_lab1.reflection;
+package com.github.alllef.Lipovetskii_Java_Web_lab1.parsing;
+
+import com.github.alllef.Lipovetskii_Java_Web_lab1.file_handling.OutPutDirSingleton;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,11 +11,10 @@ public class JavaFileParser {
     private File file;
     private File outputDir;
 
-    public JavaFileParser(File file, File outputDir) {
+    public JavaFileParser(File file) {
         this.file = file;
-        this.outputDir = outputDir;
-
-        System.out.println("Changed file " + file.getName() + "in directory " + file.getParent());
+        outputDir = OutPutDirSingleton.getOutputDir().outputDir;
+        System.out.println("Changed file " + file.getAbsolutePath());
     }
 
 
@@ -36,7 +37,15 @@ public class JavaFileParser {
     public File changeModifierToProtected() {
         List<String> stringFile = getFileAsStringLines();
         List<String> forbiddenTypes = List.of("class", "interface", "enum", "record");
-        try (FileWriter writer = new FileWriter(new File(outputDir, file.getName()))) {
+        File tmp = new File(outputDir, file.getName());
+
+        try {
+            tmp.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (FileWriter writer = new FileWriter(tmp)) {
 
             for (String line : stringFile) {
                 if (forbiddenTypes.stream()

@@ -10,7 +10,9 @@ public class DirectoryTraverse {
 
     public DirectoryTraverse(File startFile) {
         this.startFile = startFile;
+        OutPutDirSingleton.getOutputDir().recreateDir();
         traverse(startFile);
+
     }
 
     public void traverse(File dir) {
